@@ -3,6 +3,10 @@ Object.defineProperties module.exports,
     enumerable: true
     get: -> require './patch'
 
+  run:
+    enumerable: true
+    get: -> require './run'
+
   watch:
     enumerable: true
     get: -> require './watch'
@@ -10,4 +14,3 @@ Object.defineProperties module.exports,
   walk:
     enumerable: true
     get: -> require './walk'
-
