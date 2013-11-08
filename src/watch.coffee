@@ -1,15 +1,16 @@
 fs    = require 'fs'
-walk  = require './walk'
-patch = require './patch'
 path  = require 'path'
 
-module.exports = (dir, opts, cb) ->
-  if typeof opts is 'function'
-    [cb, opts] = [opts, {}]
+vm = require './vm'
+walk = require './walk'
+{parseArgs} = require './utils'
 
-  opts.patch ?= true
 
-  watching = {}
+module.exports = parseArgs (basePath, opts, cb) ->
+  {relative, excluded} = opts
+  opts.patch          ?= true
+  modules              = {}
+  watching             = {}
 
   watch = (dir) ->
     watching[dir].close() if watching[dir]
@@ -17,18 +18,30 @@ module.exports = (dir, opts, cb) ->
     watching[dir] = fs.watch dir, (event, filename) ->
       filename = path.join dir, filename
 
-      fs.stat filename, (err, stats) ->
-        return unless stats? and not err?
+      return if excluded filename
 
-        # callback with modified file
-        cb filename
+      fs.stat filename, (err, stats) ->
+        return cb err if err?
+
+        # ignore non-existent files
+        return unless stats?
 
         # watch new directory created
-        watch filename if stats.isDirectory()
+        if stats.isDirectory()
+          watch filename
+        else
+          # callback with modified file
+          cb (relative filename), stats, modules[filename] ? false
 
-  walk dir, (filename, stats) ->
+  walk basePath, opts, (filename, stats) ->
+    return if excluded filename
+
     watch filename if stats.isDirectory()
 
   if opts.patch
-    patch (filename, stats) ->
+    vm (filename, stats) ->
+      return if excluded filename
+
+      modules[filename] = true
+
       watch filename if stats.isDirectory()

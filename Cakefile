@@ -12,6 +12,14 @@ task 'build', 'build project', (options) ->
 task 'build:prepublish', 'build project prepublish step', (options) ->
   exec 'node_modules/.bin/coffee -bcm -o lib/ src/'
 
+task 'test', 'run tests', ->
+  exec "NODE_ENV=test ./node_modules/.bin/mocha
+                      --colors
+                      --compilers coffee:coffee-script
+                      --reporter spec
+                      --require test/_helper.js
+                      --timeout 5000"
+
 task 'watch', 'watch for changes and recompile project', ->
   exec './node_modules/.bin/coffee -bc -m -w -o lib/ src/'
 
