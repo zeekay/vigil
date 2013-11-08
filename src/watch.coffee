@@ -31,6 +31,8 @@ module.exports = parseArgs (basePath, opts, cb) ->
           # callback with modified file
           cb (relative filename), stats, modules[filename] ? false
 
+  watch basePath
+
   walk basePath, opts, (filename, stats) ->
     return if excluded filename
 
