@@ -9,7 +9,7 @@ _watch = (dir) ->
     console.log "#{filename} changed, reloading"
     process.exit 0
 
-module.exports = (fn) ->
+module.exports = (fn, cb = ->) ->
   utils.tmpFile '.worker-tmp', (err, filename, fd) ->
     throw err if err?
 
@@ -46,3 +46,5 @@ module.exports = (fn) ->
 
         cluster.on 'exit', (worker, code, signal) ->
           cluster.fork()
+
+        cluster.once 'listening', -> cb()

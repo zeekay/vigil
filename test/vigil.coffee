@@ -1,5 +1,6 @@
-fs    = require 'fs'
-vigil = require '../lib'
+fs      = require 'fs'
+vigil   = require '../lib'
+request = require 'request'
 
 
 describe 'vigil', ->
@@ -25,6 +26,15 @@ describe 'vigil', ->
       fs.writeFileSync __dirname + '/assets/test-module-2', ''
       fs.writeFileSync __dirname + '/assets/2/3', ''
 
+  describe '#run', ->
+    it 'should run a server module and reload on changes', (done) ->
+      vigil.run ->
+        require './test/assets/test-server'
+      , ->
+        request 'http://localhost:3333', (err, res, body) ->
+          body.should.equal 'test'
+          done()
+
   describe '#utils.globToRegex', ->
     it 'should convert various glob patterns into regex correctly', ->
       patterns =
@@ -36,3 +46,4 @@ describe 'vigil', ->
         do (glob, regexStr) ->
           regex = vigil.utils.globToRegex glob
           regex.toString().should.equal regexStr
+
