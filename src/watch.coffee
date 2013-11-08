@@ -12,7 +12,9 @@ module.exports = parseArgs (basePath, opts, cb) ->
   modules              = {}
   watching             = {}
 
-  watch = (dir) ->
+  watch = (dir, isModule) ->
+    return modules[dir] = true if isModule
+
     watching[dir].close() if watching[dir]
 
     watching[dir] = fs.watch dir, (event, filename) ->
@@ -42,6 +44,6 @@ module.exports = parseArgs (basePath, opts, cb) ->
     vm (filename, stats) ->
       return if excluded filename
 
-      modules[filename] = true
+      watch filename, true if stats.isDirectory()
 
-      watch filename if stats.isDirectory()
+  watch
