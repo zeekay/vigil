@@ -2,6 +2,7 @@ fs   = require 'fs'
 path = require 'path'
 vm   = require 'vm'
 
+
 module.exports = (cb) ->
   hooks = {}
   seen  = {}

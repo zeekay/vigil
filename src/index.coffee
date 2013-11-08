@@ -1,11 +1,11 @@
 Object.defineProperties module.exports,
-  patch:
-    enumerable: true
-    get: -> require './patch'
-
   run:
     enumerable: true
     get: -> require './run'
+
+  vm:
+    enumerable: true
+    get: -> require './vm'
 
   watch:
     enumerable: true

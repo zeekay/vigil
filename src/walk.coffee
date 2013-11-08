@@ -1,41 +1,31 @@
 fs   = require 'fs'
 path = require 'path'
 
-module.exports = (dir, opts = {}, cb) ->
-  if typeof opts is 'function'
-    [opts, cb] = [{}, opts]
+{parseArgs} = require './utils'
 
-  # expand home
-  if (dir.charAt 0) == '~'
-    home = process.env.HOME ? process.env.HOMEPATH ? process.env.USERPROFILE
-    dir = path.join home, dir.substring 2
 
-  # get absolute path
-  dir = path.resolve dir
+module.exports = parseArgs (basePath, opts, cb) ->
+  {relative, excluded} = opts
 
-  # ignore filter
-  ignore = opts.ignore ? /\.git|\.hg|\.svn|node_modules/
-
-  # readdir recursively
   walk = (dir) ->
     fs.readdir dir, (err, files) ->
       return unless files?
 
-      for file in files
-        do (file) ->
-          return if ignore.test file
+      for filename in files
+        do (filename) ->
+          filename = path.join dir, filename
 
-          file = path.join dir, file
+          return if excluded filename
 
           # stat file
-          fs.stat file, (err, stats) ->
+          fs.stat filename, (err, stats) ->
             return unless stats?
 
-            # callback with file
-            cb file, stats
+            # callback with filename
+            cb filename, stats
 
             # continue walking if directory
-            walk file if stats.isDirectory()
+            walk filename if stats.isDirectory()
 
   # begin walking dir
-  walk dir
+  walk basePath

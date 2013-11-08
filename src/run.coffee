@@ -6,7 +6,6 @@ watch   = require './watch'
 
 _watch = (dir) ->
   require('vigil').watch dir, (filename) ->
-    filename = filename.replace dir + '/', ''
     console.log "#{filename} changed, reloading"
     process.exit 0
 

@@ -9,6 +9,9 @@
   "author": "",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "chai": "~1.8.1",
+    "mocha": "~1.14.0",
+    "source-map-support": "~0.2.3"
   }
 }
