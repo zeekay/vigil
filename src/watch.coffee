@@ -21,10 +21,8 @@ module.exports = parseArgs (basePath, opts, cb) ->
       return if excluded filename
 
       fs.stat filename, (err, stats) ->
-        return cb err if err?
-
         # ignore non-existent files
-        return unless stats?
+        return if err? or not stats?
 
         # watch new directory created
         if stats.isDirectory()

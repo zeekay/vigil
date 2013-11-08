@@ -5,7 +5,7 @@ utils   = require './utils'
 watch   = require './watch'
 
 _watch = (dir) ->
-  require('vigil').watch dir, (filename) ->
+  require('vigil').watch dir, (filename, stats, isModule) ->
     console.log "#{filename} changed, reloading"
     process.exit 0
 
@@ -23,6 +23,7 @@ module.exports = (fn) ->
 
            // change mainModule to fake file in cwd, so requires work as expected
            process.mainModule.filename = '#{path.join process.cwd(), 'tmp-worker'}';
+
            // set __dirname
            __dirname = '#{process.cwd()}';
 
