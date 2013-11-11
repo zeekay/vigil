@@ -91,14 +91,17 @@ exports.parseArgs = (fn) ->
     basePath = path.resolve basePath
 
     try
-      excludeRe = (parsePattern opts.exclude) ? /^\.|^node_modules|^npm-debug.log$|Cakefile|\.md$|\.txt$|^package.json$/
+      excludeRe = (parsePattern opts.exclude) ? /^\.|^node_modules|^npm-debug.log$|Cakefile|\.md$|\.txt$|^package.json$|\.map$/
       includeRe = (parsePattern opts.include) ? /[^\s\S]/
     catch err
       return cb err
 
-    # get path relative to basePath
+    # get path relative to basePath if possible
     relative = (filename) ->
-      (filename.substring basePath.length).replace /^\//, ''
+      if (filename.indexOf basePath) == 0
+        (filename.substring basePath.length).replace /^\//, ''
+      else
+        filename
 
     # test whether filename is excluded
     excluded = (filename) ->
