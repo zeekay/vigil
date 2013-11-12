@@ -9,6 +9,7 @@ walk = require './walk'
 module.exports = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
   opts.patch          ?= true
+  opts.recurse        ?= true
   modules              = {}
   watching             = {}
 
@@ -35,10 +36,11 @@ module.exports = parseArgs (basePath, opts, cb) ->
 
   watch basePath
 
-  walk basePath, opts, (filename, stats) ->
-    return if excluded filename
+  if opts.recurse
+    walk basePath, opts, (filename, stats) ->
+      return if excluded filename
 
-    watch filename if stats.isDirectory()
+      watch filename if stats.isDirectory()
 
   if opts.patch
     vm (filename, stats) ->
