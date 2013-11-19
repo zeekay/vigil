@@ -91,7 +91,7 @@ exports.parseArgs = (fn) ->
     basePath = path.resolve basePath
 
     try
-      excludeRe = (parsePattern opts.exclude) ? /^\.|^node_modules|^npm-debug.log$|Cakefile|\.md$|\.txt$|^package.json$|\.map$/
+      excludeRe = (parsePattern opts.exclude) ? /^\.|^node_modules|^npm-debug.log$|Cakefile|\.md$|\.txt$|^package.json$|\.map$|\.DS_Store/
       includeRe = (parsePattern opts.include) ? /[^\s\S]/
     catch err
       return cb err
