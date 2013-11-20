@@ -1,12 +1,24 @@
 {
   "name": "vigil",
   "version": "0.2.8",
-  "description": "",
-  "main": "lib",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Simple, efficient file watching.",
+  "homepage": "http://github.com/zeekay/vigil",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/zeekay/vigil"
   },
-  "author": "",
+  "bugs": {
+    "url": "http://github.com/zeekay/vigil/issues"
+  },
+  "main": "lib/",
+  "scripts": {
+    "test": "cake test"
+  },
+  "author": {
+    "name": "Zach Kelling",
+    "email": "zk@monoid.io",
+    "url": "http://zeekay.io"
+  },
   "license": "BSD-2-Clause",
   "devDependencies": {
     "coffee-script": "~1.6.3",
