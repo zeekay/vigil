@@ -12,6 +12,7 @@
   },
   "main": "lib/",
   "scripts": {
+    "prepublish": "cake build",
     "test": "cake test"
   },
   "author": {
