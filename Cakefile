@@ -9,9 +9,6 @@ task 'clean', 'clean project', (options) ->
 task 'build', 'build project', (options) ->
   exec 'node_modules/.bin/coffee -bcm -o lib/ src/'
 
-task 'build:prepublish', 'build project prepublish step', (options) ->
-  exec 'node_modules/.bin/coffee -bcm -o lib/ src/'
-
 task 'test', 'run tests', ->
   exec "NODE_ENV=test ./node_modules/.bin/mocha
                       --colors
