@@ -10,6 +10,7 @@ module.exports = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
   opts.patch          ?= true
   opts.recurse        ?= true
+  opts.watchSymlink   ?= false
   modules              = {}
   watching             = {}
 
@@ -30,6 +31,12 @@ module.exports = parseArgs (basePath, opts, cb) ->
         # watch new directory created
         if stats.isDirectory()
           watch filename
+
+        # watch real dir of symbolic link
+        else if stats.isSymbolicLink() and opts.watchSymlink
+          fs.readLink filename, (err, realPath) ->
+            watch path.dirname realPath
+
         else
           # callback with modified file
           cb (relative filename), stats, modules[filename] ? false
