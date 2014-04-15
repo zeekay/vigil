@@ -16,7 +16,8 @@ module.exports = (fn, cb = ->) ->
     code = """
            // try to require coffee-script so subsequent requires to coffee files works
            try {
-             require('coffee-script');
+             // CoffeeScript 1.7+
+             require('coffee-script/register');
            } catch (err) {
              // do nothing, coffee-script isn't supported, oh well
            }
