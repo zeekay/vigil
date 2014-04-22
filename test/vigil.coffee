@@ -1,6 +1,7 @@
 fs      = require 'fs'
 vigil   = require '../lib'
 request = require 'request'
+should  = (require 'chai').should()
 
 
 describe 'vigil', ->
