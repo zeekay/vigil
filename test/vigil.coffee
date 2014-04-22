@@ -8,7 +8,7 @@ describe 'vigil', ->
   describe '#walk', ->
     it 'should find all files and directories in test dir', (done) ->
       found = 0
-      vigil.walk __dirname + '/assets', (filename, stats) ->
+      vigil.walk './test/assets', (filename, stats) ->
         done() if ++found == 5
 
   describe '#vm', ->
@@ -16,16 +16,16 @@ describe 'vigil', ->
       found = 0
       vigil.vm (filename, stats) ->
         done() if ++found == 2
-      require __dirname + '/assets/test-module'
+      require '../test/assets/test-module'
 
   describe '#watch', ->
     it 'should detect filechanges', (done) ->
       found = 0
-      vigil.watch __dirname + '/assets', (filename, stats, isModule) ->
+      vigil.watch './test/assets', (filename, stats, isModule) ->
         done() if ++found == 2
-      require __dirname + '/assets/test-module-2'
-      fs.writeFileSync __dirname + '/assets/test-module-2', ''
-      fs.writeFileSync __dirname + '/assets/2/3', ''
+      require '../test/assets/test-module-2'
+      fs.writeFileSync './test/assets/test-module-2', ''
+      fs.writeFileSync './test/assets/2/3', ''
 
   describe '#run', ->
     it 'should run a server module and reload on changes', (done) ->
