@@ -1,4 +1,4 @@
-# vigil
+# vigil [![Build Status](https://travis-ci.org/zeekay/vigil.svg?branch=master)](https://travis-ci.org/zeekay/vigil)
 Simple, efficient file watcher for node.
 
 ### Example
