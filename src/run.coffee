@@ -29,7 +29,7 @@ module.exports = (fn, cb = ->) ->
            __dirname = '#{process.cwd()}';
 
            // start watching cwd for changes
-           (#{_watch.toString()}('#{process.cwd()}'));
+           (#{_watch.toString().replace 'vigil', __dirname}('#{process.cwd()}'));
 
            // execute callback as worker process
            (#{fn.toString()}());
