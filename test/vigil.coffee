@@ -22,6 +22,7 @@ describe 'vigil', ->
     it 'should detect filechanges', (done) ->
       found = 0
       vigil.watch './test/assets', (filename, stats, isModule) ->
+        console.log filename
         done() if ++found == 2
       require '../test/assets/test-module-2'
       fs.writeFileSync './test/assets/test-module-2', ''
