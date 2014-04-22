@@ -1,7 +1,9 @@
 fs      = require 'fs'
-vigil   = require '../lib'
+os      = require('os')
 request = require 'request'
 should  = (require 'chai').should()
+
+vigil   = require '../lib'
 
 
 describe 'vigil', ->
@@ -22,8 +24,12 @@ describe 'vigil', ->
     it 'should detect filechanges', (done) ->
       found = 0
       vigil.watch './test/assets', (filename, stats, isModule) ->
-        console.log filename
-        done() if ++found == 2
+        # each platform behaves slightly differently :(
+        if os.platform() == 'darwin'
+          done() if ++found == 2
+        else
+          done()
+
       require '../test/assets/test-module-2'
       fs.writeFileSync './test/assets/test-module-2', ''
       fs.writeFileSync './test/assets/2/3', ''
