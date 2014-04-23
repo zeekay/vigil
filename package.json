@@ -1,6 +1,6 @@
 {
   "name": "vigil",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple, efficient file watching.",
   "homepage": "http://github.com/zeekay/vigil",
   "repository": {
