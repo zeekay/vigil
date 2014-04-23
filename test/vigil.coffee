@@ -54,4 +54,3 @@ describe 'vigil', ->
         do (glob, regexStr) ->
           regex = vigil.utils.globToRegex glob
           regex.toString().should.equal regexStr
-

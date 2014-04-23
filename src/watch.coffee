@@ -22,7 +22,8 @@ module.exports = parseArgs (basePath, opts, cb) ->
     watching[dir] = fs.watch dir, (event, filename) ->
       filename = path.join dir, filename
 
-      return if excluded filename
+      if excluded filename
+        return
 
       fs.stat filename, (err, stats) ->
         # ignore non-existent files
@@ -45,13 +46,15 @@ module.exports = parseArgs (basePath, opts, cb) ->
 
   if opts.recurse
     walk basePath, opts, (filename, stats) ->
-      return if excluded filename
+      if excluded filename
+        return
 
       watch filename if stats.isDirectory()
 
   if opts.patch
     vm (filename, stats) ->
-      return if excluded filename
+      if excluded filename
+        return
 
       watch filename, true if stats.isDirectory()
 
