@@ -3,6 +3,9 @@ path = require 'path'
 
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
+exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.md$|\.txt$|package.json$|\.map$|\.DS_Store/
+exports.includeRe = defaultIncludeRe = /[^\s\S]/
+
 tmpName = (prefix, cb, tries = 0) ->
   if tries > 5
     return cb new Error 'max tries exceeded'
@@ -91,8 +94,8 @@ exports.parseArgs = (fn) ->
     basePath = path.resolve basePath
 
     try
-      excludeRe = (parsePattern opts.exclude) ? /^\.|node_modules|npm-debug.log$|Cakefile|\.md$|\.txt$|package.json$|\.map$|\.DS_Store/
-      includeRe = (parsePattern opts.include) ? /[^\s\S]/
+      excludeRe = (parsePattern opts.exclude) ? defaultExcludeRe
+      includeRe = (parsePattern opts.include) ? defaultIncludeRe
     catch err
       return cb err
 
