@@ -81,7 +81,7 @@ parsePattern = (pattern) ->
 
 # utility function to setup args for walk/watch
 exports.parseArgs = (fn) ->
-  (basePath, opts = {}, cb) ->
+  (basePath, opts, cb) ->
     if typeof opts is 'function'
       [opts, cb] = [{}, opts]
 
