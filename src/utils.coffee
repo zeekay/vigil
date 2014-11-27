@@ -33,7 +33,7 @@ exports.tmpFile = (prefix, cb) ->
       process.addListener 'uncaughtException', cleanup
       process.addListener 'exit', cleanup
 
-exports.globToRegex = (s) ->
+exports.globToRegex = globToRegex = (s) ->
   chars = (c for c in s)
   re = '^'
 
@@ -73,11 +73,11 @@ parsePattern = (pattern) ->
   return unless pattern?
 
   if Array.isArray pattern or typeof pattern == 'string'
-    utils.globToRegex pattern
+    globToRegex pattern
   else if pattern instanceof RegExp
     pattern
   else
-    throw new Error 'expected RegExp or glob pattern(s)'
+    throw new Error 'Expected RegExp or glob pattern(s)'
 
 # utility function to setup args for walk/watch
 exports.parseArgs = (fn) ->
