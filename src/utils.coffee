@@ -69,15 +69,26 @@ exports.globToRegex = globToRegex = (s) ->
 
   new RegExp re
 
-parsePattern = (pattern) ->
-  return unless pattern?
+parsePattern = (patterns) ->
+  return unless patterns?
 
-  if Array.isArray pattern or typeof pattern == 'string'
-    globToRegex pattern
-  else if pattern instanceof RegExp
-    pattern
-  else
-    throw new Error 'Expected RegExp or glob pattern(s)'
+  if patterns instanceof RegExp
+    return patterns
+
+  if typeof patterns == 'string'
+    return globToRegex patterns
+
+  unless Array.isArray
+    throw new Error 'Expected Array, RegExp or glob pattern'
+
+  # convert every pattern to RegExp
+  for pat, i in patterns
+    if typeof pat == 'string'
+      patterns[i] = globToRegex pattern
+    else if not pat instanceof RegExp
+      throw new Error 'Expected RegExp or glob pattern'
+
+  new RegExp (re.source for re in patterns).join '|'
 
 # utility function to setup args for walk/watch
 exports.parseArgs = (fn) ->
