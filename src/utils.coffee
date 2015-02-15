@@ -4,7 +4,7 @@ path = require 'path'
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
 exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.md$|\.txt$|package.json$|\.map$|\.DS_Store/
-exports.includeRe = defaultIncludeRe = /[^\s\S]/
+exports.includeRe = defaultIncludeRe = /^\S/
 
 tmpName = (prefix, cb, tries = 0) ->
   if tries > 5
@@ -120,7 +120,9 @@ exports.parseArgs = (fn) ->
     # test whether filename is excluded
     excluded = (filename) ->
       relname = relative filename
-      (excludeRe.test relname) and not (includeRe.test relname)
+
+      return true unless includeRe.test relname
+      return true if     excludeRe.test relname
 
     opts.relative = relative
     opts.excluded = excluded
