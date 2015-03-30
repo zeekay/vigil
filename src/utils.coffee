@@ -3,7 +3,7 @@ path = require 'path'
 
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
-exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.md$|\.txt$|package.json$|\.map$|\.DS_Store/
+exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.txt$|package.json$|\.map$|\.DS_Store/
 exports.includeRe = defaultIncludeRe = /^\S/
 
 tmpName = (prefix, cb, tries = 0) ->
