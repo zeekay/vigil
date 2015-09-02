@@ -1,29 +1,27 @@
-fs    = require 'fs'
-path  = require 'path'
+fs   = require 'fs'
+path = require 'path'
 
-vm = require './vm'
+vm   = require './vm'
 walk = require './walk'
-{parseArgs} = require './utils'
-
+{debounce, parseArgs} = require './utils'
 
 module.exports = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
   opts.patch          ?= true
   opts.recurse        ?= true
   opts.watchSymlink   ?= false
+
   modules              = {}
   watching             = {}
 
   watch = (dir, isModule) ->
     return modules[dir] = true if isModule
+    return if watching[dir]
 
-    watching[dir].close() if watching[dir]
-
-    watching[dir] = fs.watch dir, (event, filename) ->
+    onchange = (event, filename) ->
       filename = path.join dir, filename
 
-      if excluded filename
-        return
+      return if excluded filename
 
       fs.stat filename, (err, stats) ->
         # ignore non-existent files
@@ -38,9 +36,11 @@ module.exports = parseArgs (basePath, opts, cb) ->
           fs.readLink filename, (err, realPath) ->
             watch path.dirname realPath
 
+        # file changed
         else
-          # callback with modified file
           cb (relative filename), stats, modules[filename] ? false
+
+    watching[dir] = fs.watch dir, (debounce 500, onchange)
 
   watch basePath
 

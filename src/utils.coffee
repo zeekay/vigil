@@ -128,3 +128,55 @@ exports.parseArgs = (fn) ->
     opts.excluded = excluded
 
     fn basePath, opts, cb
+
+# Find callback in an array of arguments
+getcb = (args) ->
+  for arg, i in args
+    if typeof arg is 'function'
+      cb = args.splice i, 1
+      return [cb, i]
+
+  [null, -1]
+
+n = 0
+
+# Debounce fn for given timeout
+exports.debounce = (timeout, fn) ->
+  running  = {}
+
+  ->
+    start = new Date()
+    args = [].slice.call arguments
+    key = JSON.stringify args
+
+    # Don't start again if already running
+    return if running[key]?
+
+    # Mark this argument combination as running
+    running[key] = true
+
+    # Check for callback
+    [cb, i] = getcb args
+
+    # Clear flag after timeout
+    done = ->
+      end = new Date()
+      diff = end - start
+      if diff > timeout
+        delete running[key]
+      else
+        wait = timeout - diff
+        setTimeout ->
+          delete running[key]
+        , wait
+
+    # Wrap callback if async
+    if cb?
+      args.splice i, 0, ->
+        cb.apply null, arguments
+        done()
+
+    # Call debounced fn
+    fn.apply null, args
+
+    done() unless cb?
