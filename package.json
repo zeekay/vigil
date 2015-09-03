@@ -27,10 +27,10 @@
     }
   ],
   "devDependencies": {
-    "chai": "^1.10.0",
+    "chai": "^3.2.0",
     "coffee-script": "^1.9.3",
-    "executive": "^0.4.7",
-    "mocha": "^1.21.5",
+    "executive": "^0.5.1",
+    "mocha": "^2.3.0",
     "postmortem": "^0.1.8",
     "request": "^2.53.0"
   }
