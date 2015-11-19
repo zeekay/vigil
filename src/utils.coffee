@@ -50,8 +50,8 @@ exports.parseArgs = (fn) ->
     basePath = path.resolve basePath
 
     try
-      excludeRe = (toRegExp opts.exclude) ? defaultExcludeRe
-      includeRe = (toRegExp opts.include) ? defaultIncludeRe
+      excludeRe = toRegExp opts.exclude ? defaultExcludeRe
+      includeRe = toRegExp opts.include ? defaultIncludeRe
     catch err
       return cb err
 
