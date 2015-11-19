@@ -53,6 +53,7 @@ exports.parseArgs = (fn) ->
       excludeRe = toRegExp opts.exclude ? defaultExcludeRe
       includeRe = toRegExp opts.include ? defaultIncludeRe
     catch err
+      console.error 'Invalid include/exclude specified: ' + err
       return cb err
 
     # get path relative to basePath if possible
