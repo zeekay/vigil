@@ -66,8 +66,10 @@ exports.parseArgs = (fn) ->
     excluded = (filename) ->
       relname = relative filename
 
-      return true unless includeRe.test relname
-      return true if     excludeRe.test relname
+      if includeRe?
+        return true unless includeRe.test relname
+      if excludeRe?
+        return true if excludeRe.test relname
 
     opts.relative = relative
     opts.excluded = excluded
