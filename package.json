@@ -30,6 +30,6 @@
     "request": "^2.53.0"
   },
   "dependencies": {
-    "to-regexp": "^0.1.5"
+    "to-regexp": "^0.1.6"
   }
 }
