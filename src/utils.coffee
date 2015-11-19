@@ -1,5 +1,6 @@
-fs   = require 'fs'
-path = require 'path'
+fs       = require 'fs'
+path     = require 'path'
+toRegExp = require 'to-regexp'
 
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
@@ -33,62 +34,6 @@ exports.tmpFile = (prefix, cb) ->
       process.addListener 'uncaughtException', cleanup
       process.addListener 'exit', cleanup
 
-exports.globToRegex = globToRegex = (s) ->
-  chars = (c for c in s)
-  re = '^'
-
-  while chars.length > 0
-    c = chars.shift()
-    switch c
-      # escape
-      when '/', '$', '^', '+', '?', '.', '(', ')', '=', '!', '|', '{', '}', ','
-        re += '\\' + c
-
-      # this is an escaped character
-      when '\\'
-        re += '\\\\' + chars.shift()
-
-      # convert glob special characters
-      when '*'
-        re += '.*'
-
-      when '?'
-        re += '.'
-
-      when '['
-        re += c
-        while chars.length > 0 and c != ']'
-          c = chars.shift()
-          re += c
-
-      # normal character
-      else
-        re += c
-
-  re += '$'
-
-  new RegExp re
-
-parsePattern = (patterns) ->
-  return unless patterns?
-
-  if patterns instanceof RegExp
-    return patterns
-
-  if typeof patterns == 'string'
-    return globToRegex patterns
-
-  unless Array.isArray
-    throw new Error 'Expected Array, RegExp or glob pattern'
-
-  # convert every pattern to RegExp
-  for pat, i in patterns
-    if typeof pat == 'string'
-      patterns[i] = globToRegex pattern
-    else if not pat instanceof RegExp
-      throw new Error 'Expected RegExp or glob pattern'
-
-  new RegExp (re.source for re in patterns).join '|'
 
 # utility function to setup args for walk/watch
 exports.parseArgs = (fn) ->
@@ -105,8 +50,8 @@ exports.parseArgs = (fn) ->
     basePath = path.resolve basePath
 
     try
-      excludeRe = (parsePattern opts.exclude) ? defaultExcludeRe
-      includeRe = (parsePattern opts.include) ? defaultIncludeRe
+      excludeRe = (toRegExp opts.exclude) ? defaultExcludeRe
+      includeRe = (toRegExp opts.include) ? defaultIncludeRe
     catch err
       return cb err
 

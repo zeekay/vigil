@@ -42,15 +42,3 @@ describe 'vigil', ->
         request 'http://localhost:3333', (err, res, body) ->
           body.should.equal 'test'
           done()
-
-  describe '#utils.globToRegex', ->
-    it 'should convert various glob patterns into regex correctly', ->
-      patterns =
-        'foo*': '/^foo.*$/'
-        'foobar*': '/^foobar.*$/'
-        '[bc]ar': '/^[bc]ar$/'
-        'foo/bar': '/^foo\\/bar$/'
-      for glob, regexStr of patterns
-        do (glob, regexStr) ->
-          regex = vigil.utils.globToRegex glob
-          regex.toString().should.equal regexStr
