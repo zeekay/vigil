@@ -4,11 +4,7 @@ node_js:
   - 4
   - 5
 script: >
-  ./node_modules/.bin/mocha --reporter spec \
-                              --timeout 5000 \
-                              --compilers coffee:coffee-script/register \
-                              --require postmortem/register \
-                              .test
+  - cake test
 cache:
   directories:
     - node_modules

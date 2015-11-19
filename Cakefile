@@ -24,10 +24,8 @@ task 'watch', 'watch for changes and recompile project', ->
   exec './node_modules/.bin/coffee -bc -m -w -o lib/ src/'
 
 task 'publish', 'publish project', (options) ->
-  newVersion = options.version ? 'patch'
-
   exec """
   git push
-  npm version #{newVersion}
+  git push --tags
   npm publish
   """.split '\n'
