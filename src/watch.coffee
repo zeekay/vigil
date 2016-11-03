@@ -38,7 +38,10 @@ module.exports = parseArgs (basePath, opts, cb) ->
 
         # file changed
         else
-          cb (relative filename), stats, modules[filename] ? false
+          # Callback with file, patched stats object
+          stats.basePath     = basePath
+          stats.relativePath = relative filename
+          cb filename, stats, modules[filename] ? false
 
     watching[dir] = fs.watch dir, (debounce 500, onchange)
 
