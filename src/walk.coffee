@@ -21,7 +21,9 @@ module.exports = parseArgs (basePath, opts, cb) ->
           fs.stat filename, (err, stats) ->
             return unless stats?
 
-            # callback with filename
+            # Callback with file, patched stats object
+            stats.basePath     = basePath
+            stats.relativePath = relative filename
             cb filename, stats
 
             # continue walking if directory
