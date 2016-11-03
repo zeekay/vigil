@@ -1,6 +1,6 @@
-fs   = require 'fs'
-path = require 'path'
-vm   = require 'vm'
+fs    = require 'fs'
+path  = require 'path'
+patch = require './patch'
 
 
 module.exports = (cb) ->
@@ -40,14 +40,4 @@ module.exports = (cb) ->
   updateHooks()
 
   # Patch VM module
-  methods =
-    createScript:     1
-    runInThisContext: 1
-    runInNewContext:  2
-    runInContext:     2
-
-  for method, idx of methods
-    original = vm[method]
-    vm[method] = ->
-      found filename if filename = arguments[idx]
-      original.apply vm, arguments
+  patch found

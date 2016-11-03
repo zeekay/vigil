@@ -21,15 +21,17 @@
     "url": "http://zeekay.io"
   },
   "license": "MIT",
-  "devDependencies": {
-    "chai": "^3.4.1",
-    "coffee-script": "^1.9.3",
-    "executive": "^0.5.1",
-    "mocha": "^2.3.4",
-    "request": "^2.53.0"
-  },
   "dependencies": {
-    "source-map-support": "^0.3.3",
-    "to-regexp": "^0.1.6"
+    "to-regexp": "0.1.7"
+  },
+  "devDependencies": {
+    "cake-publish": "0.1.5",
+    "cake-version": "0.1.9",
+    "chai": "3.5.0",
+    "coffee-script": "1.11.1",
+    "mocha": "3.1.2",
+    "request": "2.76.0",
+    "shortcake": "1.1.18",
+    "source-map-support": "0.4.6"
   }
 }
