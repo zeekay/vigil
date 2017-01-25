@@ -1,5 +1,7 @@
 # vigil [![Build Status](https://travis-ci.org/zeekay/vigil.svg?branch=master)](https://travis-ci.org/zeekay/vigil) [![npm version](https://badge.fury.io/js/vigil.svg)](https://badge.fury.io/js/vigil)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/zeekay/vigil.svg)](https://greenkeeper.io/)
+
 Simple, fast, efficient file watcher for node.
 
 ### Example
