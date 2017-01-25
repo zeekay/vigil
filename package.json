@@ -28,10 +28,10 @@
     "cake-publish": "0.1.5",
     "cake-version": "0.1.9",
     "chai": "3.5.0",
-    "coffee-script": "1.11.1",
-    "mocha": "3.1.2",
-    "request": "2.76.0",
+    "coffee-script": "1.12.3",
+    "mocha": "3.2.0",
+    "request": "2.79.0",
     "shortcake": "1.1.18",
-    "source-map-support": "0.4.6"
+    "source-map-support": "0.4.10"
   }
 }
