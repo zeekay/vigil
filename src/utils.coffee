@@ -72,24 +72,31 @@ exports.parseArgs = (fn) ->
     # Get absolute path
     basePath = path.resolve basePath
 
-    # Setup default include, exclude filters
-    try
-      excludeRe = toRegExp opts.exclude ? defaultExcludeRe
-
-      # If you get a globby, use it
-      if maybeGlobby
-        includeRe = toRegExp opts.include ? defaultIncludeRe
-      else
-        includeRe = toRegExp maybeGlobby
-    catch err
-      return cb err
-
-    # get path relative to basePath if possible
+    # Get path relative to basePath if possible
     relative = (filename) ->
       if (filename.indexOf basePath) == 0
         (filename.substring basePath.length).replace /^\//, ''
       else
         filename
+
+    # If glob pattern is specified, the logic for matching files changes
+    if maybeGlobby
+      regex = toRegExp maybeGlobby
+
+      excluded = (filename) ->
+        regex.test filename
+
+      opts.relative = relative
+      opts.excluded = excluded
+
+      return fn basePath, opts, cb
+
+    # Setup default include, exclude filters
+    try
+      excludeRe = toRegExp opts.exclude ? defaultExcludeRe
+      includeRe = toRegExp opts.include ? defaultIncludeRe
+    catch err
+      return cb err
 
     # test whether filename is excluded
     excluded = (filename) ->
