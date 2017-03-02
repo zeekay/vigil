@@ -84,7 +84,7 @@ exports.parseArgs = (fn) ->
       regex = toRegExp maybeGlobby
 
       excluded = (filename) ->
-        regex.test filename
+        regex.test relative filename
 
       opts.relative = relative
       opts.excluded = excluded
