@@ -35,23 +35,52 @@ exports.tmpFile = (prefix, cb) ->
       process.addListener 'exit', cleanup
 
 
-# utility function to setup args for walk/watch
+# Split a potential pattern into a basePath + regex
+splitPattern = (pattern) ->
+  isGlob = (s) ->
+    /[*?]/.exec s
+
+  findBasePath = (pattern) ->
+    paths = pattern.split '/'
+    basePaths = []
+    for p in paths
+      if isGlob p
+        break
+      else
+        basePaths.push p
+    basePaths.join '/'
+
+  basePath = findBasePath pattern
+  pattern  = pattern.replace basePath, ''
+
+  [basePath, pattern]
+
+# Utility function to setup args for walk/watch
 exports.parseArgs = (fn) ->
-  (basePath, opts, cb) ->
+  (pattern, opts, cb) ->
     if typeof opts is 'function'
       [opts, cb] = [{}, opts]
 
-    # expand home
+    # Find basePath and possible globby
+    [basePath, maybeGlobby] = splitPattern pattern
+
+    # Expand home
     if (basePath.charAt 0) == '~'
       home = process.env.HOME ? process.env.HOMEPATH ? process.env.USERPROFILE
       basePath = path.join home, dir.substring 2
 
-    # get absolute path
+    # Get absolute path
     basePath = path.resolve basePath
 
+    # Setup default include, exclude filters
     try
       excludeRe = toRegExp opts.exclude ? defaultExcludeRe
-      includeRe = toRegExp opts.include ? defaultIncludeRe
+
+      # If you get a globby, use it
+      if maybeGlobby
+        includeRe = toRegExp opts.include ? defaultIncludeRe
+      else
+        includeRe = toRegExp maybeGlobby
     catch err
       return cb err
 
