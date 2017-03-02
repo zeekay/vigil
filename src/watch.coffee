@@ -7,7 +7,7 @@ walk = require './walk'
 
 module.exports = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
-  opts.patch          ?= true
+  opts.patch          ?= false
   opts.recurse        ?= true
   opts.watchSymlink   ?= false
 
