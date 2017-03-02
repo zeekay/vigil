@@ -16,7 +16,8 @@ describe 'vigil', ->
     it 'should convert globby basepaths into include regex', (done) ->
       found = 0
       vigil.walk './test/assets/*.js', (filename, stats) ->
-        console.log found
+        unless /.*.js/.test filename
+          throw new Error 'file does not match regex', filename
         done() if ++found == 2
 
   describe '#vm', ->
