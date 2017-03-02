@@ -13,6 +13,12 @@ describe 'vigil', ->
       vigil.walk './test/assets', (filename, stats) ->
         done() if ++found == 5
 
+    it 'should convert globby basepaths into include regex', (done) ->
+      found = 0
+      vigil.walk './test/assets/*.js', (filename, stats) ->
+        console.log found
+        done() if ++found == 2
+
   describe '#vm', ->
     it 'should find modules as they are required by node', (done) ->
       found = 0
