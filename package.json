@@ -28,10 +28,7 @@
     "to-regexp": "^0.1.7"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "co-mocha": "1.2.0",
     "coffee-script": "1.12.5",
-    "mocha": "3.3.0",
     "request": "2.81.0",
     "sake-bundle": "^0.5.2",
     "sake-cli": "^0.5.6",
