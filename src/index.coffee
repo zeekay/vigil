@@ -1,6 +1,5 @@
-Object.defineProperties module.exports,
-  run:   enumerable: true, get: -> require './run'
-  utils: enumerable: true, get: -> require './utils'
-  vm:    enumerable: true, get: -> require './vm'
-  walk:  enumerable: true, get: -> require './walk'
-  watch: enumerable: true, get: -> require './watch'
+export {run}   from './run'
+import {utils} from './utils'
+import {vm}    from './vm'
+import {walk}  from './walk'
+import {watch} from './watch'
