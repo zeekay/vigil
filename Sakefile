@@ -1,7 +1,7 @@
-require 'shortcake'
-
-use 'cake-version'
-use 'cake-publish'
+use 'sake-bundle'
+use 'sake-outdated'
+use 'sake-publish'
+use 'sake-version'
 
 option '-g', '--grep [filter]', 'test filter'
 option '-v', '--version [<newversion> | major | minor | patch | build]', 'new version'
