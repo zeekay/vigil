@@ -1,9 +1,9 @@
-vm = require 'vm'
+import vm from 'vm'
 
 nodeVersion = ->
   parseInt process.version.substring(1).split('.')[0], 10
 
-module.exports = (found) ->
+export default patch = (found) ->
   createScript     = vm.createScript
   runInContext     = vm.runInContext
   runInNewContext  = vm.runInNewContext
