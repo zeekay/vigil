@@ -3,7 +3,7 @@ os      = require('os')
 request = require 'request'
 should  = (require 'chai').should()
 
-vigil   = require '../lib'
+vigil   = require '../'
 
 
 describe 'vigil', ->
