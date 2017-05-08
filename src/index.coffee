@@ -1,5 +1,7 @@
-export {run}   from './run'
-import {utils} from './utils'
-import {vm}    from './vm'
-import {walk}  from './walk'
-import {watch} from './watch'
+export {default as run}   from './run'
+export {default as vm}    from './vm'
+export {default as walk}  from './walk'
+export {default as watch} from './watch'
+
+import * as utils from './utils'
+export {utils}

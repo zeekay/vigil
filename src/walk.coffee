@@ -1,10 +1,9 @@
-fs   = require 'fs'
-path = require 'path'
+import fs   from 'fs'
+import path from 'path'
 
-{parseArgs} = require './utils'
+import {parseArgs} from './utils'
 
-
-module.exports = parseArgs (basePath, opts, cb) ->
+export default walk = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
 
   walk = (dir) ->

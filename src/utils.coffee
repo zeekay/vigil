@@ -4,8 +4,8 @@ toRegExp = require 'to-regexp'
 
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
-exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.txt$|package.json$|\.map$|\.DS_Store/
-exports.includeRe = defaultIncludeRe = /^\S/
+export excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.txt$|package.json$|\.map$|\.DS_Store/
+export includeRe = defaultIncludeRe = /^\S/
 
 tmpName = (prefix, cb, tries = 0) ->
   if tries > 5
@@ -19,7 +19,7 @@ tmpName = (prefix, cb, tries = 0) ->
     else
       cb null, filename
 
-exports.tmpFile = (prefix, cb) ->
+export tmpFile = (prefix, cb) ->
   tmpName prefix, (err, filename) ->
     return cb err if err?
 
@@ -56,7 +56,7 @@ splitPattern = (pattern) ->
   [basePath, pattern]
 
 # Utility function to setup args for walk/watch
-exports.parseArgs = (fn) ->
+export parseArgs = (fn) ->
   (pattern, opts, cb) ->
     if typeof opts is 'function'
       [opts, cb] = [{}, opts]
@@ -127,7 +127,7 @@ getcb = (args) ->
 n = 0
 
 # Debounce fn for given timeout
-exports.debounce = (timeout, fn) ->
+export debounce = (timeout, fn) ->
   running  = {}
 
   ->
