@@ -1,13 +1,13 @@
-fs   = require 'fs'
-path = require 'path'
+import fs   from 'fs'
+import path from 'path'
 
-vm   = require './vm'
-walk = require './walk'
-{debounce, parseArgs} = require './utils'
+import vm   from './vm'
+import walk from './walk'
+import {debounce, parseArgs} from './utils'
 
-module.exports = parseArgs (basePath, opts, cb) ->
+export default watch = parseArgs (basePath, opts, cb) ->
   {relative, excluded} = opts
-  opts.patch          ?= true
+  opts.patch          ?= false
   opts.recurse        ?= true
   opts.watchSymlink   ?= false
 

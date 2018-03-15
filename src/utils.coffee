@@ -4,8 +4,8 @@ toRegExp = require 'to-regexp'
 
 tmpDir = process.env.TMPDIR ? process.env.TMP ? process.env.TEMP ? '/tmp'
 
-exports.excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.txt$|package.json$|\.map$|\.DS_Store/
-exports.includeRe = defaultIncludeRe = /^\S/
+export excludeRe = defaultExcludeRe = /^\.|node_modules|npm-debug.log$|Cakefile|\.txt$|package.json$|\.map$|\.DS_Store/
+export includeRe = defaultIncludeRe = /^\S/
 
 tmpName = (prefix, cb, tries = 0) ->
   if tries > 5
@@ -19,7 +19,7 @@ tmpName = (prefix, cb, tries = 0) ->
     else
       cb null, filename
 
-exports.tmpFile = (prefix, cb) ->
+export tmpFile = (prefix, cb) ->
   tmpName prefix, (err, filename) ->
     return cb err if err?
 
@@ -35,32 +35,71 @@ exports.tmpFile = (prefix, cb) ->
       process.addListener 'exit', cleanup
 
 
-# utility function to setup args for walk/watch
-exports.parseArgs = (fn) ->
-  (basePath, opts, cb) ->
+# Split a potential pattern into a basePath + regex
+splitPattern = (pattern) ->
+  isGlob = (s) ->
+    /[*?]/.exec s
+
+  findBasePath = (pattern) ->
+    paths = pattern.split '/'
+    basePaths = []
+    for p in paths
+      if isGlob p
+        break
+      else
+        basePaths.push p
+    basePaths.join '/'
+
+  basePath = findBasePath pattern
+  pattern  = pattern.replace basePath, ''
+
+  [basePath, pattern]
+
+# Utility function to setup args for walk/watch
+export parseArgs = (fn) ->
+  (pattern, opts, cb) ->
     if typeof opts is 'function'
       [opts, cb] = [{}, opts]
 
-    # expand home
+    # Find basePath and possible globby
+    [basePath, maybeGlobby] = splitPattern pattern
+
+    # Expand home
     if (basePath.charAt 0) == '~'
       home = process.env.HOME ? process.env.HOMEPATH ? process.env.USERPROFILE
       basePath = path.join home, dir.substring 2
 
-    # get absolute path
+    # Get absolute path
     basePath = path.resolve basePath
 
-    try
-      excludeRe = toRegExp opts.exclude ? defaultExcludeRe
-      includeRe = toRegExp opts.include ? defaultIncludeRe
-    catch err
-      return cb err
-
-    # get path relative to basePath if possible
+    # Get path relative to basePath if possible
     relative = (filename) ->
       if (filename.indexOf basePath) == 0
         (filename.substring basePath.length).replace /^\//, ''
       else
         filename
+
+    # If glob pattern is specified, the logic for matching files changes
+    if maybeGlobby
+      regex = toRegExp maybeGlobby
+
+      excluded = (filename) ->
+        if regex.test filename
+          false
+        else
+          true
+
+      opts.relative = relative
+      opts.excluded = excluded
+
+      return fn basePath, opts, cb
+
+    # Setup default include, exclude filters
+    try
+      excludeRe = toRegExp opts.exclude ? defaultExcludeRe
+      includeRe = toRegExp opts.include ? defaultIncludeRe
+    catch err
+      return cb err
 
     # test whether filename is excluded
     excluded = (filename) ->
@@ -88,7 +127,7 @@ getcb = (args) ->
 n = 0
 
 # Debounce fn for given timeout
-exports.debounce = (timeout, fn) ->
+export debounce = (timeout, fn) ->
   running  = {}
 
   ->

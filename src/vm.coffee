@@ -1,9 +1,9 @@
-fs    = require 'fs'
-path  = require 'path'
-patch = require './patch'
+import fs    from 'fs'
+import path  from 'path'
+import patch from './patch'
 
 
-module.exports = (cb) ->
+export default vm = (cb) ->
   hooks = {}
   seen  = {}
 

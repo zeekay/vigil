@@ -1,6 +1,6 @@
 {
   "name": "vigil",
-  "version": "0.6.1",
+  "version": "0.7.3",
   "description": "Simple, efficient file watching.",
   "homepage": "http://github.com/zeekay/vigil",
   "repository": {
@@ -10,28 +10,33 @@
   "bugs": {
     "url": "http://github.com/zeekay/vigil/issues"
   },
-  "main": "lib/",
+  "main": "lib/vigil.js",
+  "module": "lib/vigil.mjs",
+  "files": [
+    "lib/",
+    "src/"
+  ],
   "scripts": {
-    "prepublish": "cake build",
-    "test": "cake test"
+    "build": "sake build",
+    "prepublishOnly": "sake build",
+    "pretest": "sake build",
+    "test": "sake test"
   },
-  "author": {
-    "name": "Zach Kelling",
-    "email": "zk@monoid.io",
-    "url": "http://zeekay.io"
-  },
+  "author": "Zach Kelling <z@zeekay.io>",
   "license": "MIT",
   "dependencies": {
-    "to-regexp": "0.1.7"
+    "to-regexp": "^0.1.7"
   },
   "devDependencies": {
-    "cake-publish": "0.1.5",
-    "cake-version": "0.1.9",
-    "chai": "3.5.0",
-    "coffee-script": "1.12.3",
-    "mocha": "3.2.0",
-    "request": "2.79.0",
-    "shortcake": "1.1.18",
-    "source-map-support": "0.4.10"
+    "coffee-script": "1.12.5",
+    "request": "2.81.0",
+    "sake-bundle": "^0.5.2",
+    "sake-cli": "^0.5.6",
+    "sake-linked": "^0.1.2",
+    "sake-outdated": "^0.1.27",
+    "sake-publish": "^0.1.16",
+    "sake-test": "^0.1.5",
+    "sake-version": "^0.1.19",
+    "source-map-support": "0.4.15"
   }
 }
