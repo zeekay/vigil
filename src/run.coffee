@@ -1,16 +1,17 @@
-cluster = require 'cluster'
-fs      = require 'fs'
-path    = require 'path'
-utils   = require './utils'
-watch   = require './watch'
+import cluster from 'cluster'
+import fs      from 'fs'
+import path    from 'path'
+
+import {tmpFile} from './utils'
+import watch     from './watch'
 
 _watch = (dir) ->
   require('vigil').watch dir, (filename, stats, isModule) ->
     console.log "#{filename} changed, reloading"
     process.exit 0
 
-module.exports = (fn, cb = ->) ->
-  utils.tmpFile '.worker-tmp', (err, filename, fd) ->
+export default run = (fn, cb = ->) ->
+  tmpFile '.worker-tmp', (err, filename, fd) ->
     throw err if err?
 
     code = """
