@@ -15,12 +15,12 @@ export default run = (fn, cb = ->) ->
     throw err if err?
 
     code = """
-           // try to require coffee-script so subsequent requires to coffee files works
+           // try to require coffeescript so subsequent requires to coffee files works
            try {
              // CoffeeScript 1.7+
-             require('coffee-script/register');
+             require('coffeescript/register');
            } catch (err) {
-             // do nothing, coffee-script isn't supported, oh well
+             // do nothing, coffeescript isn't supported, oh well
            }
 
            // change mainModule to fake file in cwd, so requires work as expected
