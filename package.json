@@ -37,6 +37,6 @@
     "sake-publish": "^0.1.17",
     "sake-test": "^0.2.1",
     "sake-version": "^0.1.19",
-    "source-map-support": "0.5.4"
+    "source-map-support": "0.5.6"
   }
 }
