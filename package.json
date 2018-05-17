@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "coffeescript": "^2.2.3",
-    "request": "2.85.0",
+    "request": "2.86.0",
     "sake-bundle": "^0.6.7",
     "sake-cli": "^0.7.1",
     "sake-linked": "^0.1.2",
