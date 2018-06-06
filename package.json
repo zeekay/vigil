@@ -28,16 +28,16 @@
     "to-regexp": "^0.1.7"
   },
   "devDependencies": {
-    "coffeescript": "^2.2.3",
-    "request": "2.85.0",
-    "sake-bundle": "^0.6.7",
-    "sake-cli": "^0.6.5",
+    "coffeescript": "^2.3.1",
+    "request": "2.87.0",
+    "sake-bundle": "^0.6.13",
+    "sake-cli": "^0.7.2",
     "sake-linked": "^0.1.2",
-    "sake-outdated": "^0.2.2",
+    "sake-outdated": "^0.3.0",
     "sake-publish": "^0.1.17",
     "sake-test": "^0.2.1",
     "sake-version": "^0.1.19",
-    "source-map-support": "0.5.4"
+    "source-map-support": "0.5.6"
   },
   "greenkeeper": {
     "ignore": [
